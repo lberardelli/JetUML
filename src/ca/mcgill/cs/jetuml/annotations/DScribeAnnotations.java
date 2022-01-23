@@ -8,17 +8,6 @@ import java.lang.annotation.Target;
 
 public class DScribeAnnotations {
 	
-	//ToString Template
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.TYPE, ElementType.METHOD})
-	public @interface ToString {
-		public String factory();
-		
-		public String target();
-		
-		public String uut() default "";
-	}
-	
 	// AssertThrows Template
 	@Repeatable(AssertThrowsList.class)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -121,5 +110,33 @@ public class DScribeAnnotations {
 	@Target({ ElementType.TYPE, ElementType.METHOD })
 	public @interface EqualsContractList {
 		EqualsContract[] value();
+	}
+	
+	//ToString Template
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.TYPE, ElementType.METHOD})
+	public @interface ToString {
+		public String factory();
+		
+		public String target();
+		
+		public String uut() default "";
+	}
+	
+	//AssertBools Template
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.TYPE, ElementType.METHOD})
+	public @interface AssertBools {
+		public String factory();
+		
+		public String trueState();
+		
+		public String falseState();
+		
+		public String trueParams();
+		
+		public String falseParams();
+		
+		public String uut() default "";
 	}
 }

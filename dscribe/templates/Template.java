@@ -1,3 +1,4 @@
+package $package$;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.mcgill.cs.swevo.dscribe.annotations.DScribeAnnotation.*;
@@ -6,8 +7,19 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class Template {	
+	
 	/**
-	 * Throws $exType$ when $state$.
+	 * $method$ returns a correctly formatted string
+	 */
+	@Template("ToString")
+	@Types($target$=EXPR, $factory$=EXPR)
+	@Test
+	public void $method$_ReturnsCorrectlyFormatted() {
+		assertEquals($target$, $factory$.$method$());
+	}
+	
+	/**
+	 * Throws $exType$ when $state$
 	 */
 	@Template("AssertThrows")
 	@Types($state$=EXPR, $exType$=EXCEPTION, $factory$=EXPR, $params$=EXPR_LIST)
@@ -38,7 +50,7 @@ public class Template {
 		$class$ cloned = initial.$method$();
 		assertNotSame(initial, cloned);
 		assertEquals(initial, cloned);
-	}
+	}	
 
 	/** Returns $bool$ when $state$. */
 	@Template("AssertBool")
@@ -47,6 +59,20 @@ public class Template {
 	public void $method$_When$state$_Return$bool$() {
 		boolean actual = $factory$.$method$($params$);
 		assert$bool$(actual);
+	}
+	
+	/**
+	 * Returns true when $truthState$, false when $falseState$
+	 * 
+	 */
+	@Template("AssertBools")
+	@Types($trueState$=EXPR, $falseState$=EXPR, $factory$=EXPR, $trueParams$=EXPR_LIST, $falseParams$=EXPR_LIST)
+	@Test
+	public void $method$_ReturnsCorrectly() {
+		boolean actual = $factory$.$method$($trueParams$);
+		boolean fOracle = $factory$.$method$($falseParams$);
+		assertTrue(actual);
+		assertFalse(fOracle);
 	}
 	
 	/** Returns $expected$ when input is null. */
@@ -58,6 +84,7 @@ public class Template {
 		assertEquals(expected, actual);
 	}
 	
+	/** Asserts equality */
 	@Template("EqualsContract")
 	@Types($factory1$=EXPR, $factory2$=EXPR, $factory3$=EXPR)
 	public class EqualsContractTest {

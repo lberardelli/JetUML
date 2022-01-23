@@ -48,7 +48,6 @@ public final class Version implements Comparable<Version> {
     }
 
     @Override
-    @ToString(factory = "Version.create(1,1,1)", target = "\"1.1.1\"")
     public String toString() {
         StringJoiner versionString = new StringJoiner(".");
         versionString.add(Integer.toString(aMajor));
@@ -67,9 +66,9 @@ public final class Version implements Comparable<Version> {
      * @throws IllegalArgumentException if the string cannot be parsed into a valid
      *                                  version
      * @pre pVersionString != null
-     * @dscribe Throws java.lang.IllegalArgumentException.class when notIntegers.
-     * @dscribe Throws java.lang.IllegalArgumentException.class when Invalid.
-     * @dscribe Throws java.lang.IllegalArgumentException.class when tooManyTokens.
+     * @dscribe Throws java.lang.IllegalArgumentException.class when Invalid. fing fing sdlkfl foo foo
+     * @dscribe Throws java.lang.IllegalArgumentException.class when notIntegers. fing fing sdlkfl foo foo
+     * @dscribe Throws java.lang.IllegalArgumentException.class when tooManyTokens. fing fing sdlkfl foo foo
      */
     public static Version parse(String pVersionString) {
         String[] tokens = pVersionString.split("\\.");

@@ -1,8 +1,7 @@
 package ca.mcgill.cs.jetuml.application;
 
 import org.junit.jupiter.api.Test;
-import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.AssertThrows;
-import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.EqualsContract;
+import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -142,6 +141,31 @@ public class TestVersion {
         assertTrue(Version.create(3, 0).compatibleWith(Version.create(3, 1)));
     }
 
+    @Test
+    public void whenAppliedSymmetrically_ReturnSameResult() {
+        boolean actual1 = Version.create(1, 1, 1).equals(Version.create(0, 0));
+        boolean actual2 = Version.create(0, 0).equals(Version.create(1, 1, 1));
+        assertEquals(actual1, actual2);
+    }
+
+    @Test
+    public void whenVersionsAreEqual_ReturnTrue() {
+        boolean actual = Version.create(1, 1, 1).equals(Version.create(1, 1, 1));
+        assertTrue(actual);
+    }
+
+    @Test
+    public void whenVersionsAreDifferent_ReturnFalse() {
+        boolean actual = Version.create(1, 1, 1).equals(Version.create(0, 0));
+        assertFalse(actual);
+    }
+
+    @Test
+    public void whenVersionIsNull_ReturnFalse() {
+        boolean actual = Version.create(1, 1, 1).equals(null);
+        assertFalse(actual);
+    }
+
     @EqualsContract(factory1 = "Version.create(1,1,1)", factory2 = "Version.create(0,0)", factory3 = "Version.create(1,1,1)", uut = "equals(Object)")
     public class EqualsContractTest {
 
@@ -175,6 +199,15 @@ public class TestVersion {
             boolean actual = Version.create(1, 1, 1).equals(null);
             assertFalse(actual);
         }
+    }
+
+    /*
+	 * $method$ returns a correctly formatted string
+	 */
+    @Test
+    @ToString(factory = "Version.create(1,1,1)", target = "\"1.1.1\"", uut = "toString()")
+    public void toString_ReturnsCorrectlyFormatted() {
+        assertEquals("1.1.1", Version.create(1, 1, 1).toString());
     }
 
     @Test
