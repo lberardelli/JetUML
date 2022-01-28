@@ -40,12 +40,31 @@ public class Template {
 	}
 	
 	/**
+	 * When $state$ returns correctly
+	 */
+	@Template("StatefulReturnsDouble")
+	@Types($factory$=EXPR, $params$=EXPR_LIST, $target$=EXPR, $state$=EXPR)
+	@Test
+	public void test_$method$when$state$() {
+		double oracle = Double.valueOf($target$);
+		assertEquals(oracle, $factory$.$method$($params$));
+	}
+	
+	@Template("ReturnsDouble")
+	@Types($factory$=EXPR, $params$=EXPR_LIST, $target$=EXPR)
+	@Test
+	public void test_$method$() {
+		double oracle = Double.valueOf($target$);
+		assertEquals(oracle, $factory$.$method$($params$));
+	}
+	
+	/**
 	 * Performs a shallow copy of the object.
 	 */
 	@Template("ShallowClone")
 	@Types($factory$=EXPR)
 	@Test
-	public void clone_ReturnShallowCopy() {
+	public void $method$_ReturnShallowCopy() {
 		$class$ initial = $factory$;
 		$class$ cloned = initial.$method$();
 		assertNotSame(initial, cloned);
@@ -63,7 +82,6 @@ public class Template {
 	
 	/**
 	 * Returns true when $truthState$, false when $falseState$
-	 * 
 	 */
 	@Template("AssertBools")
 	@Types($trueState$=EXPR, $falseState$=EXPR, $factory$=EXPR, $trueParams$=EXPR_LIST, $falseParams$=EXPR_LIST)
@@ -81,7 +99,19 @@ public class Template {
 	@Test
 	public void $method$_WhenInputIsNull_Return$expected$() {
 		boolean actual = $factory$.$method$(null);
-		assertEquals(expected, actual);
+		assertEquals($expected$, actual);
+	}
+	
+	/**
+	 * Returns a $class$ object
+	 */
+	@Template("AsFactory")
+	@Types($factory$=EXPR, $state$=EXPR, $oracle$=EXPR, $verification_method$=EXPR, $params$=EXPR_LIST)
+	@Test
+	public void $method$_testAsFactory$state$() {
+		$class$ res = $factory$.$method$($params$);
+		//a number of assertions equal to the number of internal data
+		assertEquals($oracle$, res.$verification_method$);
 	}
 	
 	/** Asserts equality */
@@ -92,7 +122,8 @@ public class Template {
 		@Test	
 		public void when$class$sAreSame_ReturnTrue()
 		{
-			boolean actual = $factory1$.equals($factory1$);
+			$class$ foo = $factory1$;
+			boolean actual = foo.equals(foo);
 			assertTrue(actual);
 		}	
 		

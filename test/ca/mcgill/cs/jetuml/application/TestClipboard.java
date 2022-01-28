@@ -2,21 +2,18 @@
  * JetUML - A desktop application for fast UML diagramming.
  *
  * Copyright (C) 2020 by McGill University.
- *     
+ * 
  * See: https://github.com/prmr/JetUML
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses.
+ * You should have received a copy of the GNU General Public License along with this program. If not, see
+ * http://www.gnu.org/licenses.
  *******************************************************************************/
 package ca.mcgill.cs.jetuml.application;
 
@@ -60,7 +57,7 @@ public class TestClipboard
 	private ClassNode aNode1;
 	private ClassNode aNode2;
 	private Diagram aDiagram;
-	
+
 	public TestClipboard() throws ReflectiveOperationException
 	{
 		aNodesField = Clipboard.class.getDeclaredField("aNodes");
@@ -68,28 +65,28 @@ public class TestClipboard
 		aEdgesField = Clipboard.class.getDeclaredField("aEdges");
 		aEdgesField.setAccessible(true);
 	}
-	
+
 	@BeforeAll
 	public static void setupClass()
 	{
 		JavaFXLoader.load();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private List<Node> getClipboardNodes()
 	{
-		try 
+		try
 		{
 			return (List<Node>) aNodesField.get(aClipboard);
 		}
-		catch( ReflectiveOperationException e)
+		catch (ReflectiveOperationException e)
 		{
 			fail();
 			return null;
 		}
-		
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private List<Edge> getClipboardEdges()
 	{
@@ -97,41 +94,41 @@ public class TestClipboard
 		{
 			return (List<Edge>) aEdgesField.get(aClipboard);
 		}
-		catch( ReflectiveOperationException e)
+		catch (ReflectiveOperationException e)
 		{
 			fail();
 			return null;
 		}
 	}
-	
+
 	@BeforeEach
 	public void setup()
 	{
-		aClipboard = Clipboard.instance();		
+		aClipboard = Clipboard.instance();
 		aNode1 = new ClassNode();
 		aNode2 = new ClassNode();
 		aDiagram = new Diagram(DiagramType.CLASS);
 	}
-	
+
 	@Test
 	public void testCopySingleNodeNoReposition()
 	{
 		aClipboard.copy(Arrays.asList(aNode1));
 		List<Node> clipboardNodes = getClipboardNodes();
-		assertThat(extract(clipboardNodes, Node::position), hasElementsEqualTo, new Point(0,0));
-		assertThat(clipboardNodes, doesNotContain, aNode1 ); // Because it's a clone
+		assertThat(extract(clipboardNodes, Node::position), hasElementsEqualTo, new Point(0, 0));
+		assertThat(clipboardNodes, doesNotContain, aNode1); // Because it's a clone
 	}
-	
+
 	@Test
 	public void testCopySingleNodeReposition()
 	{
 		aNode1.translate(10, 10);
 		aClipboard.copy(Arrays.asList(aNode1));
 		List<Node> clipboardNodes = getClipboardNodes();
-		assertThat(extract(clipboardNodes, Node::position), hasElementsEqualTo, new Point(10,10));
+		assertThat(extract(clipboardNodes, Node::position), hasElementsEqualTo, new Point(10, 10));
 		assertThat(clipboardNodes, doesNotContain, aNode1); // Because it's a clone
 	}
-	
+
 	@Test
 	public void testCopyTwoNodesOneEdgeFlat()
 	{
@@ -140,15 +137,15 @@ public class TestClipboard
 		DependencyEdge edge = new DependencyEdge();
 		edge.connect(aNode1, aNode2, aDiagram);
 		aClipboard.copy(Arrays.asList(aNode1, aNode2, edge));
-		
+
 		List<Node> nodes = getClipboardNodes();
-		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(10,10), new Point(200,200));
+		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(10, 10), new Point(200, 200));
 
 		List<Edge> edges = getClipboardEdges();
 		assertThat(extract(edges, Edge::getStart), hasElementsSameAs, nodes.get(0));
 		assertThat(extract(edges, Edge::getEnd), hasElementsSameAs, nodes.get(1));
 	}
-	
+
 	@Test
 	public void testCopyDanglingEdgeFlat()
 	{
@@ -157,13 +154,13 @@ public class TestClipboard
 		DependencyEdge edge = new DependencyEdge();
 		edge.connect(aNode1, aNode2, aDiagram);
 		aClipboard.copy(Arrays.asList(aNode1, edge));
-		
-		List<Node> nodes = getClipboardNodes();
-		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(10,10));
 
-		assertThat(getClipboardEdges(), isEmpty );
+		List<Node> nodes = getClipboardNodes();
+		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(10, 10));
+
+		assertThat(getClipboardEdges(), isEmpty);
 	}
-	
+
 	@Test
 	public void testCopyNodeWithOneChild()
 	{
@@ -172,17 +169,17 @@ public class TestClipboard
 		DependencyEdge edge = new DependencyEdge();
 		edge.connect(aNode1, aNode1, aDiagram);
 		aClipboard.copy(Arrays.asList(pn));
-		
+
 		List<Node> nodes = getClipboardNodes();
 		assertThat(nodes, hasSize, 1);
-		
-		PackageNode node = (PackageNode)nodes.get(0);
+
+		PackageNode node = (PackageNode) nodes.get(0);
 		assertThat(node.getChildren(), hasSize, 1);
-		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(0,0));
-		
-		assertThat(getClipboardEdges(), isEmpty );
+		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(0, 0));
+
+		assertThat(getClipboardEdges(), isEmpty);
 	}
-	
+
 	@Test
 	public void testCopyNodeWithOneParent()
 	{
@@ -191,17 +188,17 @@ public class TestClipboard
 		DependencyEdge edge = new DependencyEdge();
 		edge.connect(aNode1, aNode1, aDiagram);
 		aClipboard.copy(Arrays.asList(aNode1));
-		
+
 		List<Node> nodes = getClipboardNodes();
-		assertThat( nodes, hasSize, 1 );
-		
-		ClassNode node = (ClassNode)nodes.get(0);
+		assertThat(nodes, hasSize, 1);
+
+		ClassNode node = (ClassNode) nodes.get(0);
 		assertFalse(node.hasParent());
-		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(0,0));
-		
-		assertThat(getClipboardEdges(), isEmpty );
+		assertThat(extract(nodes, Node::position), hasElementsEqualTo, new Point(0, 0));
+
+		assertThat(getClipboardEdges(), isEmpty);
 	}
-	
+
 	@Test
 	public void testCopyNodeMissingParent()
 	{
@@ -210,21 +207,21 @@ public class TestClipboard
 		field.setName("Foo");
 		field.setValue("Bar");
 		node.addChild(field);
-		
+
 		aClipboard.copy(Arrays.asList(field));
-		assertThat( getClipboardNodes(), isEmpty ); 
+		assertThat(getClipboardNodes(), isEmpty);
 	}
-	
+
 	@Test
-	public void testValidPasteOfPointNode() 
+	public void testValidPasteOfPointNode()
 	{
 		PointNode node = new PointNode();
 		aClipboard.copy(Arrays.asList(node));
 		assertTrue(aClipboard.validPaste(new Diagram(DiagramType.CLASS)));
 	}
-	
+
 	@Test
-	public void testValidPasteForDifferentDiagramTypes() 
+	public void testValidPasteForDifferentDiagramTypes()
 	{
 		ClassNode classNode = new ClassNode();
 		aClipboard.copy(Arrays.asList(classNode));

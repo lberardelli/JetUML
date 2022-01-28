@@ -29,6 +29,64 @@ public class DScribeAnnotations {
 	public @interface AssertThrowsList {
 		AssertThrows[] value();
 	}
+	
+	// StatefulReturnsDouble Template
+	@Repeatable(StatefulReturnsDoubleList.class)
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ ElementType.TYPE, ElementType.METHOD })
+	public @interface StatefulReturnsDouble {
+		String factory();
+		
+		String[] params();
+		
+		String target();
+		
+		String state();
+		
+		public String uut() default "";
+	}
+	
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ ElementType.TYPE, ElementType.METHOD })
+	public @interface StatefulReturnsDoubleList {
+		StatefulReturnsDouble[] value();
+	}
+	
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ ElementType.TYPE, ElementType.METHOD })
+	public @interface AsFactory {
+		String factory();
+		
+		String state() default "";
+		
+		String oracle();
+		
+		String verification_method();
+		
+		String[] params() default {};
+		
+		String uut() default "";
+	}
+	
+	// ReturnsDouble Template
+	@Repeatable(ReturnsDoubleList.class)
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ ElementType.TYPE, ElementType.METHOD })
+	public @interface ReturnsDouble {
+		String factory();
+		
+		String[] params();
+		
+		String target();
+		
+		public String uut() default "";
+	}
+	
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ ElementType.TYPE, ElementType.METHOD })
+	public @interface ReturnsDoubleList {
+		ReturnsDouble[] value();
+	}
 
 	// AssertThrowsMessage Template
 	@Repeatable(AssertThrowsMessageList.class)

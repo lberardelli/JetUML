@@ -1,8 +1,9 @@
-/*******************************************************************************
- * JetUML - A desktop application for fast UML diagramming.
+/**
+ * **************************************************************************** JetUML - A desktop application for fast
+ * UML diagramming.
  *
  * Copyright (C) 2020 by McGill University.
- * 
+ *
  * See: https://github.com/prmr/JetUML
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -13,38 +14,38 @@
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along with this program. If not, see
- * http://www.gnu.org/licenses.
- *******************************************************************************/
+ * http://www.gnu.org/licenses. *****************************************************************************
+ */
 package ca.mcgill.cs.jetuml.geom;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+
 public class TestDirection
-{	
+{
+
 	@ParameterizedTest(name = "Angle={0} deg")
 	@MethodSource("angleGenerator")
 	void testAllAngles(int pAngle)
 	{
-		int x = (int) Math.round(sin(Math.toRadians(pAngle))*100);
-		int y = (int) -Math.round(cos(Math.toRadians(pAngle))*100);
-		Direction direction = Direction.fromLine(new Point(0,0), new Point(x,y));
+		int x = (int) Math.round(sin(Math.toRadians(pAngle)) * 100);
+		int y = (int) -Math.round(cos(Math.toRadians(pAngle)) * 100);
+		Direction direction = Direction.fromLine(new Point(0, 0), new Point(x, y));
 		assertEquals(pAngle % 360, direction.asAngle());
 		assertEquals(sin(Math.toRadians(pAngle)), getX(direction), 0.000000001);
 		assertEquals(-cos(Math.toRadians(pAngle)), getY(direction), 0.000000001);
 	}
-	
+
 	@ParameterizedTest(name = "Angle={0} deg")
 	@MethodSource("angleGeneratorMultiplesOf25")
 	void testRotate(int pAngle)
@@ -52,7 +53,7 @@ public class TestDirection
 		Direction direction = Direction.NORTH;
 		assertEquals(pAngle % 360, direction.rotatedBy(pAngle).asAngle());
 	}
-	
+
 	@Test
 	public void testIsCardinal()
 	{
@@ -62,54 +63,53 @@ public class TestDirection
 		assertTrue(Direction.WEST.isCardinal());
 		assertFalse(Direction.fromAngle(15).isCardinal());
 	}
-	
+
 	@Test
 	void testToString()
 	{
-		assertEquals( "[Direction: 0 degrees]", Direction.NORTH.toString() );
+		assertEquals("[Direction: 0 degrees]", Direction.NORTH.toString());
 	}
-	
+
 	@Test
 	void testFlyweight()
 	{
-		assertSame( Direction.NORTH, Direction.fromLine(new Point(0,0), new Point(0, -1)));
-		assertSame( Direction.EAST, Direction.fromLine(new Point(0,0), new Point(1, 0)));
-		assertSame( Direction.SOUTH, Direction.fromLine(new Point(0,0), new Point(0, 1)));
-		assertSame( Direction.WEST, Direction.fromLine(new Point(0,0), new Point(-1, 0)));
+		assertSame(Direction.NORTH, Direction.fromLine(new Point(0, 0), new Point(0, -1)));
+		assertSame(Direction.EAST, Direction.fromLine(new Point(0, 0), new Point(1, 0)));
+		assertSame(Direction.SOUTH, Direction.fromLine(new Point(0, 0), new Point(0, 1)));
+		assertSame(Direction.WEST, Direction.fromLine(new Point(0, 0), new Point(-1, 0)));
 	}
-	
+
 	private static IntStream angleGenerator()
 	{
 		return IntStream.range(0, 500);
 	}
-	
+
 	private static IntStream angleGeneratorMultiplesOf25()
 	{
-		return IntStream.range(0, 500)
-				.filter(angle -> angle % 25 == 0);
+		return IntStream.range(0, 500).filter(angle -> angle % 25 == 0);
 	}
-	
+
 	@Test
 	void testIsBetween_Boundaries()
 	{
 		assertTrue(Direction.fromAngle(0).isBetween(Direction.fromAngle(0), Direction.fromAngle(5)));
 		assertFalse(Direction.fromAngle(5).isBetween(Direction.fromAngle(0), Direction.fromAngle(5)));
 	}
-	
+
 	@Test
 	void testIsBetween_True()
 	{
 		assertTrue(Direction.fromAngle(5).isBetween(Direction.fromAngle(0), Direction.fromAngle(10)));
 		assertFalse(Direction.fromAngle(25).isBetween(Direction.fromAngle(0), Direction.fromAngle(5)));
 	}
-	
+
 	@Test
 	void testIsBetween_False()
 	{
 		assertFalse(Direction.fromAngle(25).isBetween(Direction.fromAngle(0), Direction.fromAngle(5)));
 		assertFalse(Direction.fromAngle(25).isBetween(Direction.fromAngle(30), Direction.fromAngle(35)));
 	}
-	
+
 	@Test
 	void testMirrored()
 	{
@@ -118,10 +118,10 @@ public class TestDirection
 		assertSame(Direction.fromAngle(270), Direction.fromAngle(90).mirrored());
 		assertSame(Direction.fromAngle(90), Direction.fromAngle(270).mirrored());
 	}
-	
+
 	/**
 	 * Gets the x-component of this direction.
-	 * 
+	 *
 	 * @return the x-component (between -1 and 1)
 	 */
 	private static double getX(Direction pDirection)
@@ -131,7 +131,7 @@ public class TestDirection
 
 	/**
 	 * Gets the y-component of this direction.
-	 * 
+	 *
 	 * @return the y-component (between -1 and 1)
 	 */
 	private static double getY(Direction pDirection)
@@ -139,4 +139,19 @@ public class TestDirection
 		return -cos(toRadians(pDirection.asAngle()));
 	}
 
+	@Test
+	@AsFactory(factory = "Direction", oracle = "44", verification_method = "asAngle()", params = {
+			"44" }, state = "1", uut = "fromAngle(int)")
+	public void fromAngle_testAsFactory1()
+	{
+		Direction res = Direction.fromAngle(44);
+		assertEquals(44, res.asAngle());
+	}
+
+	@Test
+	@ToString(factory = "Direction.fromAngle(86)", target = "\"[Direction: 86 degrees]\"", uut = "toString()")
+	public void toString_ReturnsCorrectlyFormatted()
+	{
+		assertEquals("[Direction: 86 degrees]", Direction.fromAngle(86).toString());
+	}
 }
