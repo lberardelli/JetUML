@@ -157,36 +157,8 @@ public class TestVersion
 		assertTrue(Version.create(2, 1).compatibleWith(Version.create(2, 2)));
 		assertTrue(Version.create(3, 0).compatibleWith(Version.create(3, 1)));
 	}
-
-	@Test
-	public void whenAppliedSymmetrically_ReturnSameResult()
-	{
-		boolean actual1 = Version.create(1, 1, 1).equals(Version.create(0, 0));
-		boolean actual2 = Version.create(0, 0).equals(Version.create(1, 1, 1));
-		assertEquals(actual1, actual2);
-	}
-
-	@Test
-	public void whenVersionsAreEqual_ReturnTrue()
-	{
-		boolean actual = Version.create(1, 1, 1).equals(Version.create(1, 1, 1));
-		assertTrue(actual);
-	}
-
-	@Test
-	public void whenVersionsAreDifferent_ReturnFalse()
-	{
-		boolean actual = Version.create(1, 1, 1).equals(Version.create(0, 0));
-		assertFalse(actual);
-	}
-
-	@Test
-	public void whenVersionIsNull_ReturnFalse()
-	{
-		boolean actual = Version.create(1, 1, 1).equals(null);
-		assertFalse(actual);
-	}
-
+	
+	@Nested
 	@EqualsContract(factory1 = "Version.create(1,1,1)", factory2 = "Version.create(0,0)", factory3 = "Version.create(1,1,1)", uut = "equals(Object)")
 	public class EqualsContractTest
 	{

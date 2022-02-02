@@ -110,7 +110,6 @@ public class Template {
 	@Test
 	public void $method$_testAsFactory$state$() {
 		$class$ res = $factory$.$method$($params$);
-		//a number of assertions equal to the number of internal data
 		assertEquals($oracle$, res.$verification_method$);
 	}
 	
