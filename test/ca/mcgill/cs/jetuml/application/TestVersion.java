@@ -3,7 +3,6 @@ package ca.mcgill.cs.jetuml.application;
 import org.junit.jupiter.api.Test;
 import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.*;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 
 /**
@@ -157,7 +156,7 @@ public class TestVersion
 		assertTrue(Version.create(2, 1).compatibleWith(Version.create(2, 2)));
 		assertTrue(Version.create(3, 0).compatibleWith(Version.create(3, 1)));
 	}
-	
+
 	@Nested
 	@EqualsContract(factory1 = "Version.create(1,1,1)", factory2 = "Version.create(0,0)", factory3 = "Version.create(1,1,1)", uut = "equals(Object)")
 	public class EqualsContractTest

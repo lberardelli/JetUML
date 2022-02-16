@@ -18,7 +18,7 @@
  */
 package ca.mcgill.cs.jetuml.geom;
 
-import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.*;
+import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.AssertBools;
 import ca.mcgill.cs.jetuml.annotations.Immutable;
 
 /**
@@ -124,6 +124,7 @@ public class Rectangle
 	 *            The point to check.
 	 * @return True if pPoint is within the rectangle or on its boundary.
 	 * @pre pPoint != null;
+	 * @dscribe Returns true when PointIsInscribed, false when PointNotInscribed
 	 */
 	public boolean contains(Point pPoint)
 	{
@@ -137,6 +138,7 @@ public class Rectangle
 	 *            The rectangle to check.
 	 * @return True iif pRectangle is entired contains within this rectangle.
 	 * @pre pRectangle !=null.
+	 * @dscribe Returns true when Inscribed, false when NotInscribed
 	 */
 	public boolean contains(Rectangle pRectangle)
 	{
@@ -243,7 +245,7 @@ public class Rectangle
 	}
 
 	/**
-	 * @dscribe toString returns a correctly formatted string
+	 * @dscribe Encodes Rectangle data as string
 	 */
 	@Override
 	public String toString()

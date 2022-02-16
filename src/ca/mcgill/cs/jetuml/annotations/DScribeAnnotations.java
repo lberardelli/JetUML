@@ -191,10 +191,59 @@ public class DScribeAnnotations {
 		
 		public String falseState();
 		
-		public String trueParams();
+		public String[] trueParams();
 		
-		public String falseParams();
+		public String[] falseParams();
 		
 		public String uut() default "";
 	}
+	
+	//NullParam Template
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.TYPE, ElementType.METHOD})
+	public @interface NullParam {
+		public String factory();
+		
+		public String expected();
+		
+		public String returnClass();
+
+		public String uut() default "";
+	}
+	
+	//AssertBoolWithMods template
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.TYPE, ElementType.METHOD})
+	public @interface AssertBoolWithMods {
+		public String factory();
+		
+		public String statement();
+		
+		public String bool();
+		
+		public String state();
+		
+		public String[] params();
+		
+		public String uut() default "";
+	}
+	
+	//AssertBoolFieldManip template
+		@Retention(RetentionPolicy.RUNTIME)
+		@Target({ElementType.TYPE, ElementType.METHOD})
+		public @interface AssertBoolFieldManip {
+			public String factory();
+			
+			public String statement();
+			
+			public String bool();
+			
+			public String state();
+			
+			public String[] params();
+			
+			public String fieldName();
+			
+			public String uut() default "";
+		}
 }

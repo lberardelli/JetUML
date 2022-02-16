@@ -159,7 +159,7 @@ public class TestRectangle
 
 	@Test
 	@AssertBools(factory = "new Rectangle(0,0,1,1)", falseParams = "new Point(2,2)", falseState = "PointNotInscribed", trueParams = "new Point(0,0)", trueState = "PointIsInscribed", uut = "contains(Point)")
-	public void contains_ReturnsCorrectly()
+	public void contains_ReturnTest()
 	{
 		boolean actual = new Rectangle(0, 0, 1, 1).contains(new Point(0, 0));
 		boolean fOracle = new Rectangle(0, 0, 1, 1).contains(new Point(2, 2));
@@ -168,8 +168,18 @@ public class TestRectangle
 	}
 
 	@Test
+	@AssertBools(factory = "new Rectangle(0,0,10,10)", falseParams = "new Rectangle(0,0,20,20)", falseState = "NotInscribed", trueParams = "new Rectangle(0,0,1,1)", trueState = "Inscribed", uut = "contains(Rectangle)")
+	public void contains_ReturnRectTest()
+	{
+		boolean actual = new Rectangle(0, 0, 10, 10).contains(new Rectangle(0, 0, 1, 1));
+		boolean fOracle = new Rectangle(0, 0, 10, 10).contains(new Rectangle(0, 0, 20, 20));
+		assertTrue(actual);
+		assertFalse(fOracle);
+	}
+
+	@Test
 	@ToString(factory = "new Rectangle(0,0,1,1)", target = "\"[x=0, y=0, w=1, h=1]\"", uut = "toString()")
-	public void toString_ReturnsCorrectlyFormatted()
+	public void toString_Test()
 	{
 		assertEquals("[x=0, y=0, w=1, h=1]", new Rectangle(0, 0, 1, 1).toString());
 	}

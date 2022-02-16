@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.AssertBoolFieldManip;
+
 /**
  * Responsible for executing and undoing operations, and managing the collection 
  * of previously executed and undone operations. Can also compute whether a 
@@ -131,6 +133,7 @@ public class DiagramOperationProcessor
 	/**
 	 * @return True if there is at least one operation to undo.
 	 */
+	@AssertBoolFieldManip(bool = "", factory = "", fieldName = "aProcessor", params = { "" }, state = "", statement = "")
 	public boolean canUndo()
 	{
 		return !aExecutedOperations.isEmpty();

@@ -21,7 +21,6 @@ package ca.mcgill.cs.jetuml.gui;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.ReturnsDouble;
-import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.StatefulReturnsDouble;
 import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.ToString;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

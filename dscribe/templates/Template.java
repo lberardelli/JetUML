@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 public class Template {	
 	
 	/**
-	 * $method$ returns a correctly formatted string
+	 * foo foo foo
 	 */
 	@Template("ToString")
 	@Types($target$=EXPR, $factory$=EXPR)
 	@Test
-	public void $method$_ReturnsCorrectlyFormatted() {
+	public void $method$_Test() {
 		assertEquals($target$, $factory$.$method$());
 	}
 	
@@ -39,9 +39,6 @@ public class Template {
         assertEquals($message$, thrown.getMessage());
 	}
 	
-	/**
-	 * When $state$ returns correctly
-	 */
 	@Template("StatefulReturnsDouble")
 	@Types($factory$=EXPR, $params$=EXPR_LIST, $target$=EXPR, $state$=EXPR)
 	@Test
@@ -81,30 +78,54 @@ public class Template {
 	}
 	
 	/**
-	 * Returns true when $truthState$, false when $falseState$
+	 * Returns true when $trueState$, false when $falseState$
 	 */
 	@Template("AssertBools")
 	@Types($trueState$=EXPR, $falseState$=EXPR, $factory$=EXPR, $trueParams$=EXPR_LIST, $falseParams$=EXPR_LIST)
 	@Test
-	public void $method$_ReturnsCorrectly() {
+	public void $method$_When$trueState$Then$falseState$() {
 		boolean actual = $factory$.$method$($trueParams$);
 		boolean fOracle = $factory$.$method$($falseParams$);
 		assertTrue(actual);
 		assertFalse(fOracle);
 	}
 	
-	/** Returns $expected$ when input is null. */
-	@Template("NullParam")
-	@Types($factory$=EXPR, $expected$=EXPR)
+	/** 
+	 * Returns $bool$ when $state$. 
+	 */
+	@Template("AssertBoolWithMods")
+	@Types($state$=EXPR, $bool$=EXPR, $factory$=EXPR, $statement$=EXPR , $params$=EXPR_LIST)
 	@Test
-	public void $method$_WhenInputIsNull_Return$expected$() {
-		boolean actual = $factory$.$method$(null);
+	public void $method$_When$state$_Return$bool$() {
+		$class$ target = $factory$;
+		$statement$;
+		boolean oracle = target.$method$($params$);
+		assert$bool$(oracle);
+	}
+	
+	/** 
+	 * Returns $bool$ when $state$. 
+	 */
+	@Template("AssertBoolFieldManip")
+	@Types($state$=EXPR, $bool$=EXPR, $factory$=EXPR, $fieldName$=EXPR, $statement$=EXPR, $params$=EXPR_LIST)
+	@Test
+	public void $method$_When$state$_Return$bool$() {
+		$statement$;
+		boolean actual = $factory$.$method$($params$);
+		assert$bool$(actual);
+	}
+	
+	/** 
+	 * Returns $expected$ when input is null. 
+	 */
+	@Template("NullParam")
+	@Types($factory$=EXPR, $expected$=EXPR, $returnClass$=EXPR)
+	@Test
+	public void $method$_WhenInputIsNull_Test() {
+		$returnClass$ actual = $factory$.$method$(null);
 		assertEquals($expected$, actual);
 	}
 	
-	/**
-	 * Returns a $class$ object
-	 */
 	@Template("AsFactory")
 	@Types($factory$=EXPR, $state$=EXPR, $oracle$=EXPR, $verification_method$=EXPR, $params$=EXPR_LIST)
 	@Test
@@ -113,9 +134,12 @@ public class Template {
 		assertEquals($oracle$, res.$verification_method$);
 	}
 	
-	/** Asserts equality */
+	/** 
+	 * Asserts equality 
+	 */
 	@Template("EqualsContract")
 	@Types($factory1$=EXPR, $factory2$=EXPR, $factory3$=EXPR)
+	@Nested
 	public class EqualsContractTest {
 		
 		@Test	

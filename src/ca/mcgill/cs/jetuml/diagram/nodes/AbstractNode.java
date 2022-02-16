@@ -1,24 +1,20 @@
 /**
- * ****************************************************************************
- *  JetUML - A desktop application for fast UML diagramming.
+ * **************************************************************************** JetUML - A desktop application for fast
+ * UML diagramming.
  *
- *  Copyright (C) 2020, 2021 by McGill University.
+ * Copyright (C) 2020, 2021 by McGill University.
  *
- *  See: https://github.com/prmr/JetUML
+ * See: https://github.com/prmr/JetUML
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see http://www.gnu.org/licenses.
- * *****************************************************************************
+ * You should have received a copy of the GNU General Public License along with this program. If not, see
+ * http://www.gnu.org/licenses. *****************************************************************************
  */
 package ca.mcgill.cs.jetuml.diagram.nodes;
 
@@ -26,6 +22,7 @@ import static java.util.Collections.emptyList;
 import java.util.List;
 import java.util.Optional;
 import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.ShallowClone;
+import ca.mcgill.cs.jetuml.annotations.DScribeAnnotations.ToString;
 import ca.mcgill.cs.jetuml.diagram.AbstractDiagramElement;
 import ca.mcgill.cs.jetuml.diagram.Diagram;
 import ca.mcgill.cs.jetuml.diagram.Node;
@@ -55,9 +52,6 @@ public abstract class AbstractNode extends AbstractDiagramElement implements Nod
         aPosition = pPoint;
     }
 
-    /**
-     * @dscribe Performs a shallow copy of the object.
-     */
     @Override
     public AbstractNode clone() {
         AbstractNode clone = (AbstractNode) super.clone();
@@ -65,6 +59,9 @@ public abstract class AbstractNode extends AbstractDiagramElement implements Nod
         return clone;
     }
 
+    /**
+     * @dscribe foo foo foo
+     */
     @Override
     public final String toString() {
         return getClass().getSimpleName() + " at " + position();
